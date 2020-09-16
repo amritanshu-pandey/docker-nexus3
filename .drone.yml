@@ -13,7 +13,8 @@ steps:
     settings:
       repo: amritanshu16/nexus3
       tag:
-        - aarch64
+        - arm64
+        - latest
       username:
         from_secret: docker_username
       password:
@@ -37,6 +38,7 @@ steps:
       repo: amritanshu16/nexus3
       tag:
         - amd64
+        - latest
       username:
         from_secret: docker_username
       password:
