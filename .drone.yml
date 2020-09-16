@@ -5,7 +5,7 @@ name: default
 
 platform:
   os: linux
-  arch: aarch64
+  arch: arm64
 
 steps:
   - name: build-docker
