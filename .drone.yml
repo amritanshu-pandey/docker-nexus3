@@ -33,7 +33,7 @@ platform:
 
 steps:
   - name: build-docker
-    image: docker
+    image: docker:dind
     volumes:
       - name: dockersock
         path: /var/run/docker.sock
