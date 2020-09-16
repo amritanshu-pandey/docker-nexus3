@@ -11,7 +11,7 @@ steps:
   - name: build-docker
     image: plugins/docker
     settings:
-      repo: amritanshu16/nexus3
+      repo: registry.xps.lan/nexus3
       tag:
         - aarch64
       username:
