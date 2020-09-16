@@ -33,15 +33,16 @@ platform:
 
 steps:
   - name: build-docker
-    image: plugins/docker
-    settings:
-      repo: amritanshu16/nexus3
-      tag:
-        - amd64
-        - latest
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
+    image: docker
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - docker build -t amritanshu16/nexus3:amd64 .
+      - docker tag amritanshu16/nexus3:amd64 amritanshu16/nexus3:latest
+      - docker push amritanshu16/nexus3:amd64
+      - docker push amritanshu16/nexus3:latest
+      - docker rmi amritanshu16/nexus3:latest
+      - docker rmi amritanshu16/nexus3:amd64
     when:
       branch: master
