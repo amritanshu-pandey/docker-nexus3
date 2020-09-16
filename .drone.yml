@@ -1,5 +1,14 @@
-pipeline:
-  publish:
+---
+kind: pipeline
+type: docker
+name: default
+
+platform:
+  os: linux
+  arch: aarch64
+
+steps:
+  - name: build-docker
     image: plugins/docker
     repo: amritanshu16/nexus3:latest
     when:
