@@ -10,9 +10,13 @@ platform:
 steps:
   - name: build-docker
     image: plugins/docker
-    repo: amritanshu16/nexus3
-    secrets: [ docker_username, docker_password ]
-    tag:
-      - aarch64
+    settings:
+      repo: amritanshu16/nexus3
+      tag:
+        - aarch64
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
     when:
       branch: master
