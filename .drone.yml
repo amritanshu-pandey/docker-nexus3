@@ -1,7 +1,7 @@
 ---
 kind: pipeline
 type: docker
-name: default
+name: arm64
 
 platform:
   os: linux
@@ -14,6 +14,29 @@ steps:
       repo: amritanshu16/nexus3
       tag:
         - aarch64
+      username:
+        from_secret: docker_username
+      password:
+        from_secret: docker_password
+    when:
+      branch: master
+
+---
+kind: pipeline
+type: docker
+name: amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+  - name: build-docker
+    image: plugins/docker
+    settings:
+      repo: amritanshu16/nexus3
+      tag:
+        - amd64
       username:
         from_secret: docker_username
       password:
