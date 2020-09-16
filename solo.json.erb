@@ -1,0 +1,38 @@
+<%=
+require 'json'
+
+raise RuntimeError, 'environment variable DOCKER_TYPE is required' if ENV['DOCKER_TYPE'].nil? || ENV['DOCKER_TYPE'].empty?
+raise RuntimeError, 'environment variable SONATYPE_DIR is required' if ENV['SONATYPE_DIR'].nil? || ENV['SONATYPE_DIR'].empty?
+raise RuntimeError, 'environment variable NEXUS_HOME is required' if ENV['NEXUS_HOME'].nil? || ENV['NEXUS_HOME'].empty?
+raise RuntimeError, 'environment variable NEXUS_DATA is required' if ENV['NEXUS_DATA'].nil? || ENV['NEXUS_DATA'].empty?
+
+{
+  :run_list => [ "recipe[nexus_repository_manager::#{ENV['DOCKER_TYPE']}]" ],
+  :java => {
+    :install_flavor => 'openjdk',
+    :accept_license_agreement => true
+  },
+  :nexus_repository_manager => {
+    :version => ENV['NEXUS_VERSION'],
+    :nexus_download_url => ENV['NEXUS_DOWNLOAD_URL'],
+    :nexus_download_sha256 => ENV['NEXUS_DOWNLOAD_SHA256_HASH'],
+    :sonatype => {
+      :path => ENV['SONATYPE_DIR'],
+    },
+    :sonatype_work => {
+      :path => ENV['SONATYPE_DIR'] + '/sonatype-work'
+    },
+    :nexus_home => {
+      :path => ENV['SONATYPE_DIR'] + '/nexus'
+    },
+    :nexus_data => {
+      :path => ENV['NEXUS_DATA']
+    },
+    :properties => {
+      # Set the context_path to the NEXUS_CONTEXT environment variable
+      # that may be passed into the docker run command.
+      :context_path => "/${NEXUS_CONTEXT}"
+    }
+  }
+}.to_json
+%>

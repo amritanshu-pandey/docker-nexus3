@@ -1,0 +1,6 @@
+pipeline:
+  publish:
+    image: plugins/docker
+    repo: amritanshu16/nexus3:latest
+    when:
+      branch: master
