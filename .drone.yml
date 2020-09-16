@@ -21,33 +21,3 @@ steps:
         from_secret: docker_password
     when:
       branch: master
-
----
-kind: pipeline
-type: docker
-name: amd64
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-  - name: build-docker
-    image: docker:dind
-    volumes:
-      - name: dockersock
-        path: /var/run/docker.sock
-    commands:
-      - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-      - docker build -t amritanshu16/nexus3:amd64 .
-      - docker tag amritanshu16/nexus3:amd64 amritanshu16/nexus3:latest
-      - docker push amritanshu16/nexus3:amd64
-      - docker push amritanshu16/nexus3:latest
-      - docker rmi amritanshu16/nexus3:latest
-      - docker rmi amritanshu16/nexus3:amd64
-    when:
-      branch: master
-volumes:
-- name: dockersock
-  host:
-    path: /var/run/docker.sock
