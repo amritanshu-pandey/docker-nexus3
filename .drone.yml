@@ -12,7 +12,7 @@ steps:
     image: plugins/docker
     repo: amritanshu16/nexus3
     secrets: [ docker_username, docker_password ]
-    tags:
+    tag:
       - aarch64
     when:
       branch: master
